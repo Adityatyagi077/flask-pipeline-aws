@@ -4,59 +4,38 @@ on:
   push:
     branches:
       - main
-
   workflow_dispatch:
 
-
 jobs:
-
   test:
-
     name: Test Flask Application
-
     runs-on: ubuntu-latest
 
     steps:
-
       - name: Checkout Code
         uses: actions/checkout@v4
 
-
       - name: Setup Python
         uses: actions/setup-python@v5
-
         with:
           python-version: "3.12"
-
 
       - name: Install Dependencies
         run: |
           pip install -r requirements.txt
 
-
       - name: Run Tests
         run: |
           pytest -q
 
-
   deploy:
-
     name: Deploy Application
-
     needs: test
-
     runs-on: ubuntu-latest
 
-    permissions:
-      id-token: write
-      contents: read
-
-
     steps:
-
       - name: Checkout Code
         uses: actions/checkout@v4
-
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -65,26 +44,20 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-south-1
 
-
       - name: Create Deployment ZIP
         run: |
-
           zip -r flask-cicd-${{ github.sha }}.zip . \
             -x ".git/*" \
             -x ".github/*"
 
-
       - name: Upload ZIP to S3
         run: |
-
           aws s3 cp \
           flask-cicd-${{ github.sha }}.zip \
           s3://${{ secrets.S3_BUCKET }}/flask-cicd-${{ github.sha }}.zip
 
-
       - name: Deploy Using CodeDeploy
         run: |
-
           aws deploy create-deployment \
           --application-name "${{ secrets.CODEDEPLOY_APP }}" \
           --deployment-group-name "${{ secrets.CODEDEPLOY_GROUP }}" \
