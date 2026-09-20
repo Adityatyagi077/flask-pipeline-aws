@@ -7,8 +7,7 @@ def test_home():
     response = client.get("/")
 
     assert response.status_code == 200
-    assert b"MSE-1 CI/CD Deployment Successful!" in response.data
-
+    assert b"MSE-1 CI/CD AUTO DEPLOYMENT SUCCESSFUL!" in response.data
 
 def test_health():
     client = app.test_client()
