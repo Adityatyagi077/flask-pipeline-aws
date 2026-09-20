@@ -1,5 +1,6 @@
 #!/bin/bash
 
+systemctl stop flask-cicd.service || true
 set -e
 
 APP_DIR="/var/www/flask-cicd"
