@@ -5,8 +5,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-    return "MSE-1 CI/CD Deployment Successful!"
-
+    return "MSE-1 CI/CD AUTO DEPLOYMENT SUCCESSFUL!"
 
 @app.route("/health")
 def health():
