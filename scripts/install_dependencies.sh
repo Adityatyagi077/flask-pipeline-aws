@@ -9,6 +9,7 @@ echo "Installing dependencies..."
 # Create application directory
 mkdir -p $APP_DIR
 
+
 # Create virtual environment
 python3 -m venv $APP_DIR/venv
 
