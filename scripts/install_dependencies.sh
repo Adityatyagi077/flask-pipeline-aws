@@ -1,22 +1,14 @@
 #!/bin/bash
 
-set -e
+cd /var/www/flask-cicd
 
-APP_DIR="/var/www/flask-cicd"
+if [ ! -d "venv" ]; then
+    python3 -m venv venv
+fi
 
-echo "Installing dependencies..."
+source venv/bin/activate
 
-# Create application directory
-mkdir -p $APP_DIR
+pip install --upgrade pip
+pip install -r requirements.txt
 
-
-# Create virtual environment
-python3 -m venv $APP_DIR/venv
-
-# Upgrade pip
-$APP_DIR/venv/bin/python -m pip install --upgrade pip
-
-# Install application dependencies
-$APP_DIR/venv/bin/pip install -r $APP_DIR/requirements.txt
-
-echo "Dependencies installed successfully."
+chmod +x scripts/*.sh
